@@ -79,7 +79,9 @@ Table of Contents
      3.1.  Establishing a Transport-Capable HTTP/2 Connection
      3.2.  Extended CONNECT in HTTP/2
      3.3.  Creating a New Session
-     3.4.  Limiting the Number of Simultaneous Sessions
+     3.4.  Flow Control
+       3.4.1.  Limiting the Number of Simultaneous Sessions
+       3.4.2.  Flow Control and Intermediaries
    4.  WebTransport Features
      4.1.  Transport Considerations
      4.2.  WebTransport Streams
@@ -94,17 +96,17 @@ Table of Contents
      5.8.  WT_DATA_BLOCKED Capsule
      5.9.  WT_STREAM_DATA_BLOCKED Capsule
      5.10. WT_STREAMS_BLOCKED Capsule
-     5.11. DATAGRAM Capsule
-   6.  Examples
-   7.  Session Termination
-   8.  Transport Properties
-   9.  Security Considerations
-   10. IANA Considerations
-     10.1.  HTTP/2 SETTINGS Parameter Registration
-     10.2.  Capsule Types
-   11. References
-     11.1.  Normative References
-     11.2.  Informative References
+   6.  DATAGRAM Capsule
+   7.  Examples
+   8.  Session Termination
+   9.  Transport Properties
+   10. Security Considerations
+   11. IANA Considerations
+     11.1.  HTTP/2 SETTINGS Parameter Registration
+     11.2.  Capsule Types
+   12. References
+     12.1.  Normative References
+     12.2.  Informative References
    Acknowledgments
    Index
    Authors' Addresses
@@ -242,7 +244,9 @@ Table of Contents
    Both endpoints MUST NOT send any WebTransport capsules on a given
    session before that session is established.
 
-3.4.  Limiting the Number of Simultaneous Sessions
+3.4.  Flow Control
+
+3.4.1.  Limiting the Number of Simultaneous Sessions
 
    From a flow control perspective, WebTransport sessions count against
    HTTP/2 session flow control limits just like regular HTTP requests,
@@ -259,6 +263,26 @@ Table of Contents
    *  HTTP status code 429 indicates that the request was rejected due
       to rate limiting [RFC6585].  Unlike the previous method, this
       signal is directly propagated to the application.
+
+3.4.2.  Flow Control and Intermediaries
+
+   WebTransport over HTTP/2 defines several capsules for flow control,
+   and all of these capsules define special intermediary handling as
+   described in Section 3.2 of [HTTP-DATAGRAM].  These capsules,
+   referred to as the "flow control capsules" are WT_MAX_DATA,
+   WT_MAX_STREAM_DATA, WT_MAX_STREAMS, WT_DATA_BLOCKED,
+   WT_STREAM_DATA_BLOCKED, and WT_STREAMS_BLOCKED.
+
+   Because flow control in WebTransport is hop-by-hop and does not
+   provide an end-to-end signal, intermediaries MUST consume the flow
+   control capsules and not translate or forward incoming flow control
+   capsules on any other connections.  Similarly, other WebTransport
+   over HTTP/2 or HTTP/3 connections will have their own flow control
+   limits, and it is the responsibility of the intermediary to generate
+   and send appropriate flow control signals to match its capabilities.
+   The intermediary can send these signals via HTTP/3 flow control
+   messages, HTTP/2 flow control messages, or as WebTransport flow
+   control capsules, where appropriate.
 
 4.  WebTransport Features
 
@@ -467,6 +491,12 @@ Table of Contents
    sum of the lengths of Stream Data fields in WT_STREAM capsules MUST
    NOT exceed the value advertised by a receiver.
 
+   The WT_MAX_DATA capsule defines special intermediary handling, as
+   described in Section 3.2 of [HTTP-DATAGRAM].  Intermedaries MUST
+   consume WT_MAX_DATA capsules for flow control purposes and MUST
+   generate and send approrpiate flow control signals for their limits;
+   see Section 3.4.2.
+
 5.6.  WT_MAX_STREAM_DATA Capsule
 
    An HTTP capsule [HTTP-DATAGRAM] called WT_MAX_STREAM_DATA (type=0x11)
@@ -495,6 +525,12 @@ Table of Contents
    toward this limit.  The sum of the lengths of Stream Data fields in
    WT_STREAM capsules on the identified stream MUST NOT exceed the value
    advertised by a receiver.
+
+   The WT_MAX_STREAM_DATA capsule defines special intermediary handling,
+   as described in Section 3.2 of [HTTP-DATAGRAM].  Intermedaries MUST
+   consume WT_MAX_STREAM_DATA capsules for flow control purposes and
+   MUST generate and send approrpiate flow control signals for their
+   limits; see Section 3.4.2.
 
 5.7.  WT_MAX_STREAMS Capsule
 
@@ -527,6 +563,12 @@ Table of Contents
    Note that this limit includes streams that have been closed as well
    as those that are open.
 
+   The WT_MAX_STREAMS capsule defines special intermediary handling, as
+   described in Section 3.2 of [HTTP-DATAGRAM].  Intermedaries MUST
+   consume WT_MAX_STREAMS capsules for flow control purposes and MUST
+   generate and send approrpiate flow control signals for their limits;
+   see Section 3.4.2.
+
 5.8.  WT_DATA_BLOCKED Capsule
 
    A sender SHOULD send a WT_DATA_BLOCKED capsule (type=0x14) when it
@@ -546,6 +588,12 @@ Table of Contents
 
    Maximum Data:  A variable-length integer indicating the session-level
       limit at which blocking occurred.
+
+   The WT_DATA_BLOCKED capsule defines special intermediary handling, as
+   described in Section 3.2 of [HTTP-DATAGRAM].  Intermedaries MUST
+   consume WT_DATA_BLOCKED capsules for flow control purposes and MUST
+   generate and send approrpiate flow control signals for their limits;
+   see Section 3.4.2.
 
 5.9.  WT_STREAM_DATA_BLOCKED Capsule
 
@@ -569,6 +617,12 @@ Table of Contents
 
    Maximum Stream Data:  A variable-length integer indicating the offset
       of the stream at which the blocking occurred.
+
+   The WT_STREAM_DATA_BLOCKED capsule defines special intermediary
+   handling, as described in Section 3.2 of [HTTP-DATAGRAM].
+   Intermedaries MUST consume WT_STREAM_DATA_BLOCKED capsules for flow
+   control purposes and MUST generate and send approrpiate flow control
+   signals for their limits; see Section 3.4.2.
 
 5.10.  WT_STREAMS_BLOCKED Capsule
 
@@ -598,7 +652,13 @@ Table of Contents
       value cannot exceed 2^60, as it is not possible to encode stream
       IDs larger than 2^62-1.
 
-5.11.  DATAGRAM Capsule
+   The WT_STREAMS_BLOCKED capsule defines special intermediary handling,
+   as described in Section 3.2 of [HTTP-DATAGRAM].  Intermedaries MUST
+   consume WT_STREAMS_BLOCKED capsules for flow control purposes and
+   MUST generate and send approrpiate flow control signals for their
+   limits; see Section 3.4.2.
+
+6.  DATAGRAM Capsule
 
    WebTransport over HTTP/2 uses the DATAGRAM capsule defined in
    Section 3.5 of [HTTP-DATAGRAM] to carry datagram traffic.
@@ -636,7 +696,7 @@ Table of Contents
    natively supports QUIC datagrams, such as WebTransport over HTTP/3
    [WEBTRANSPORT-H3], intermediaries SHOULD use native QUIC datagrams.
 
-6.  Examples
+7.  Examples
 
    An example of negotiating a WebTransport Stream on an HTTP/2
    connection follows.  This example is intended to closely follow the
@@ -712,7 +772,7 @@ Table of Contents
                                        Stream ID = 2
                                        WebTransport Data
 
-7.  Session Termination
+8.  Session Termination
 
    An WebTransport session over HTTP/2 is terminated when either
    endpoint closes the stream associated with the CONNECT request that
@@ -720,7 +780,7 @@ Table of Contents
    terminated, the endpoint MUST stop sending new datagrams and reset
    all of the streams associated with the session.
 
-8.  Transport Properties
+9.  Transport Properties
 
    The WebTransport capsulework [OVERVIEW] defines a set of optional
    transport properties that clients can use to determine the presence
@@ -749,7 +809,7 @@ Table of Contents
       HTTP/2 and TLS.  Without such support, Http2Transport connections
       cannot survive network transitions.
 
-9.  Security Considerations
+10.  Security Considerations
 
    WebTransport over HTTP/2 satisfies all of the security requirements
    imposed by [OVERVIEW] on WebTransport protocols, thus providing a
@@ -775,9 +835,9 @@ Table of Contents
    within connection gets a reasonable share of controlled resources;
    this applies both to sending data and to opening new streams.
 
-10.  IANA Considerations
+11.  IANA Considerations
 
-10.1.  HTTP/2 SETTINGS Parameter Registration
+11.1.  HTTP/2 SETTINGS Parameter Registration
 
    The following entry is added to the "HTTP/2 Settings" registry
    established by [RFC7540]:
@@ -793,7 +853,7 @@ Table of Contents
 
    Specification:  This document
 
-10.2.  Capsule Types
+11.2.  Capsule Types
 
    The following entries are added to the "HTTP Capsule Types" registry
    established by [HTTP-DATAGRAM]:
@@ -908,9 +968,9 @@ Table of Contents
       (mailto:webtransport@ietf.org)
    Notes:  None
 
-11.  References
+12.  References
 
-11.1.  Normative References
+12.1.  Normative References
 
    [H2]       Thomson, M. and C. Benfield, "HTTP/2", Work in Progress,
               Internet-Draft, draft-ietf-httpbis-http2bis-07, 24 January
@@ -990,7 +1050,7 @@ Table of Contents
               <https://datatracker.ietf.org/doc/html/draft-ietf-
               webtrans-http3-02>.
 
-11.2.  Informative References
+12.2.  Informative References
 
    [DATAGRAM] Pauly, T., Kinnear, E., and D. Schinazi, "An Unreliable
               Datagram Extension to QUIC", RFC 9221,
@@ -1025,42 +1085,51 @@ Index
       P
 
          PADDING  Section 5.1, Paragraph 1; Section 5.1, Paragraph 1;
-            Section 10.2, Paragraph 3.4.1
+            Section 11.2, Paragraph 3.4.1
 
       W
 
-         WT_DATA_BLOCKED  Section 2, Paragraph 8; Section 5.8, Paragraph
-            1; Section 5.8, Paragraph 1; Section 5.8, Paragraph 3;
-            Section 5.9, Paragraph 1; Section 10.2, Paragraph 17.4.1
-         WT_MAX_DATA  Section 2, Paragraph 8; Section 5.5, Paragraph 1;
-            Section 5.5, Paragraph 3; Section 10.2, Paragraph 11.4.1
-         WT_MAX_STREAM_DATA  Section 2, Paragraph 8; Section 5.6,
-            Paragraph 1; Section 5.6, Paragraph 3; Section 10.2,
-            Paragraph 13.4.1
-         WT_MAX_STREAMS  Section 2, Paragraph 8; Section 5.7, Paragraph
-            1; Section 5.7, Paragraph 1; Section 5.7, Paragraph 1;
-            Section 5.7, Paragraph 3; Section 10.2, Paragraph 15.4.1
+         WT_DATA_BLOCKED  Section 2, Paragraph 8; Section 3.4.2,
+            Paragraph 1; Section 5.8, Paragraph 1; Section 5.8,
+            Paragraph 1; Section 5.8, Paragraph 3; Section 5.8,
+            Paragraph 5; Section 5.8, Paragraph 5; Section 5.9,
+            Paragraph 1; Section 11.2, Paragraph 17.4.1
+         WT_MAX_DATA  Section 2, Paragraph 8; Section 3.4.2, Paragraph
+            1; Section 5.5, Paragraph 1; Section 5.5, Paragraph 3;
+            Section 5.5, Paragraph 6; Section 5.5, Paragraph 6;
+            Section 11.2, Paragraph 11.4.1
+         WT_MAX_STREAM_DATA  Section 2, Paragraph 8; Section 3.4.2,
+            Paragraph 1; Section 5.6, Paragraph 1; Section 5.6,
+            Paragraph 3; Section 5.6, Paragraph 6; Section 5.6,
+            Paragraph 6; Section 11.2, Paragraph 13.4.1
+         WT_MAX_STREAMS  Section 2, Paragraph 8; Section 3.4.2,
+            Paragraph 1; Section 5.7, Paragraph 1; Section 5.7,
+            Paragraph 1; Section 5.7, Paragraph 1; Section 5.7,
+            Paragraph 3; Section 5.7, Paragraph 7; Section 5.7,
+            Paragraph 7; Section 11.2, Paragraph 15.4.1
          WT_RESET_STREAM  Section 2, Paragraph 9; Section 5.2, Paragraph
             1; Section 5.2, Paragraph 2; Section 5.2, Paragraph 2;
-            Section 5.2, Paragraph 4; Section 10.2, Paragraph 5.4.1
+            Section 5.2, Paragraph 4; Section 11.2, Paragraph 5.4.1
          WT_STOP_SENDING  Section 2, Paragraph 9; Section 5.3, Paragraph
             1; Section 5.3, Paragraph 1; Section 5.3, Paragraph 3;
-            Section 10.2, Paragraph 7.4.1
+            Section 11.2, Paragraph 7.4.1
          WT_STREAM  Section 2, Paragraph 7, Item 1; Section 4.1,
             Paragraph 2; Section 5.2, Paragraph 2; Section 5.2,
             Paragraph 6; Section 5.4, Paragraph 1; Section 5.4,
             Paragraph 2; Section 5.4, Paragraph 4; Section 5.4,
             Paragraph 5.4.1; Section 5.4, Paragraph 5.4.1; Section 5.5,
             Paragraph 5; Section 5.5, Paragraph 5; Section 5.6,
-            Paragraph 5; Section 5.6, Paragraph 5; Section 6, Paragraph
-            3; Section 10.2, Paragraph 9.4.1
-         WT_STREAM_DATA_BLOCKED  Section 2, Paragraph 8; Section 5.9,
-            Paragraph 1; Section 5.9, Paragraph 3; Section 10.2,
-            Paragraph 19.4.1
-         WT_STREAMS_BLOCKED  Section 2, Paragraph 8; Section 5.10,
+            Paragraph 5; Section 5.6, Paragraph 5; Section 7, Paragraph
+            3; Section 11.2, Paragraph 9.4.1
+         WT_STREAM_DATA_BLOCKED  Section 2, Paragraph 8; Section 3.4.2,
+            Paragraph 1; Section 5.9, Paragraph 1; Section 5.9,
+            Paragraph 3; Section 5.9, Paragraph 5; Section 5.9,
+            Paragraph 5; Section 11.2, Paragraph 19.4.1
+         WT_STREAMS_BLOCKED  Section 2, Paragraph 8; Section 3.4.2,
             Paragraph 1; Section 5.10, Paragraph 1; Section 5.10,
-            Paragraph 2; Section 5.10, Paragraph 4; Section 10.2,
-            Paragraph 21.4.1
+            Paragraph 1; Section 5.10, Paragraph 2; Section 5.10,
+            Paragraph 4; Section 5.10, Paragraph 6; Section 5.10,
+            Paragraph 6; Section 11.2, Paragraph 21.4.1
 
 Authors' Addresses
 
