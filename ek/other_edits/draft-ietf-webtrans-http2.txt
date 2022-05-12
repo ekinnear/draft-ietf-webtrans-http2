@@ -5,7 +5,7 @@
 webtrans                                                     A. Frindell
 Internet-Draft                                             Facebook Inc.
 Intended status: Standards Track                              E. Kinnear
-Expires: 8 September 2022                                       T. Pauly
+Expires: 13 November 2022                                       T. Pauly
                                                               Apple Inc.
                                                               M. Thomson
                                                                  Mozilla
@@ -13,7 +13,7 @@ Expires: 8 September 2022                                       T. Pauly
                                                                   Google
                                                                   G. Xie
                                                            Facebook Inc.
-                                                            7 March 2022
+                                                             12 May 2022
 
 
                        WebTransport using HTTP/2
@@ -54,7 +54,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 September 2022.
+   This Internet-Draft will expire on 13 November 2022.
 
 Copyright Notice
 
@@ -82,7 +82,7 @@ Table of Contents
      3.4.  Limiting the Number of Simultaneous Sessions
    4.  WebTransport Features
      4.1.  Transport Considerations
-     4.2.  WebTransport Stream States
+     4.2.  WebTransport Streams
    5.  WebTransport Frames
      5.1.  WT_PADDING Frames
      5.2.  WT_RESET_STREAM Frames
@@ -222,11 +222,11 @@ Table of Contents
    Upon receiving an extended CONNECT request with a :protocol field set
    to webtransport, the HTTP server checks if the identified resource
    supports WebTransport sessions.  If the resource does not, the server
-   SHOULD reply with status code 404 (Section 6.5.4 of [RFC7231]).  To
-   accept a WebTransport session the server replies with 2xx status
-   code.  Before accepting a session, a server MUST ensure that it
-   authorizes use of the session by the site identified in the Origin
-   header.
+   SHOULD reply with status code 404 (Section 6.5.4 of [RFC7231]).  If
+   it does, it MAY accept the session by replying with a 2xx series
+   status code, as defined in Section 15.3 of [SEMANTICS].  The
+   WebTransport server MUST verify the Origin header to ensure that the
+   specified origin is allowed to access the server in question.
 
    From the client's perspective, a WebTransport session is established
    when the client receives a 200 response.  From the server's
@@ -280,11 +280,20 @@ Table of Contents
    implementation deliver that data to the application in a reliable
    manner.
 
-4.2.  WebTransport Stream States
+4.2.  WebTransport Streams
 
-   WebTransport streams have states that mirror the states of QUIC
-   streams (Section 3 of [RFC9000]) as closely as possible to aid in
-   ease of implementation.
+   WebTransport streams have identifiers and states that mirror the
+   identifiers ((Section 2.1 of [RFC9000])) and states (Section 3 of
+   [RFC9000]) of QUIC streams as closely as possible to aid in ease of
+   implementation.
+
+   WebTransport streams are identified by a numeric value, or stream ID.
+   Stream IDs are only meaningful within the WebTransport session in
+   which they were created.  They share the same semantics as QUIC
+   stream IDs, with client initiated streams having even-numbered stream
+   IDs and server-initiated streams having odd-numbered stream IDs.
+   Similarly, they can be bidirectional or unidirectional, indicated by
+   the second least significant bit of the stream ID.
 
    Because WebTransport does not provide an acknowledgement mechanism
    for WebTransport frames, it relies on the underlying transport's in
@@ -352,10 +361,10 @@ Table of Contents
    An endpoint uses a WT_RESET_STREAM frame (type=0x04) to abruptly
    terminate the sending part of a stream.
 
-   After sending a WT_RESET_STREAM, an endpoint ceases transmission and
-   retransmission of WT_STREAM frames on the identified stream.  A
-   receiver of WT_RESET_STREAM can discard any data that it already
-   received on that stream.
+   After sending a WT_RESET_STREAM, an endpoint ceases transmission of
+   WT_STREAM frames on the identified stream.  A receiver of
+   WT_RESET_STREAM can discard any data that it already received on that
+   stream.
 
    WT_RESET_STREAM Frame {
      Type (i) = 0x04,
@@ -836,6 +845,13 @@ Table of Contents
               DOI 10.17487/RFC9000, May 2021,
               <https://www.rfc-editor.org/rfc/rfc9000>.
 
+   [SEMANTICS]
+              Fielding, R. T., Nottingham, M., and J. Reschke, "HTTP
+              Semantics", Work in Progress, Internet-Draft, draft-ietf-
+              httpbis-semantics-19, 12 September 2021,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-
+              semantics-19>.
+
    [WEBTRANSPORT-H3]
               Frindell, A., Kinnear, E., and V. Vasiliev, "WebTransport
               over HTTP/3", Work in Progress, Internet-Draft, draft-
@@ -878,18 +894,18 @@ Index
 
       W
 
-         WT_DATAGRAM  Section 5.11, Paragraph 1; Section 5.11, Paragraph
-            3; Section 5.11, Paragraph 5; Section 5.11, Paragraph 6
          WT_DATA_BLOCKED  Section 2, Paragraph 7; Section 5.8, Paragraph
             1; Section 5.8, Paragraph 1; Section 5.8, Paragraph 3;
             Section 5.9, Paragraph 1
+         WT_DATAGRAM  Section 5.11, Paragraph 1; Section 5.11, Paragraph
+            3; Section 5.11, Paragraph 5; Section 5.11, Paragraph 6
          WT_MAX_DATA  Section 2, Paragraph 7; Section 5.5, Paragraph 1;
             Section 5.5, Paragraph 3
+         WT_MAX_STREAM_DATA  Section 2, Paragraph 7; Section 5.6,
+            Paragraph 1; Section 5.6, Paragraph 3
          WT_MAX_STREAMS  Section 2, Paragraph 7; Section 5.7, Paragraph
             1; Section 5.7, Paragraph 1; Section 5.7, Paragraph 1;
             Section 5.7, Paragraph 3
-         WT_MAX_STREAM_DATA  Section 2, Paragraph 7; Section 5.6,
-            Paragraph 1; Section 5.6, Paragraph 3
          WT_PADDING  Section 5.1, Paragraph 1
          WT_RESET_STREAM  Section 2, Paragraph 8; Section 5.2, Paragraph
             1; Section 5.2, Paragraph 2; Section 5.2, Paragraph 3;
@@ -903,11 +919,11 @@ Index
             Paragraph 5.4.1; Section 5.5, Paragraph 5; Section 5.5,
             Paragraph 5; Section 5.6, Paragraph 5; Section 5.6,
             Paragraph 5; Section 6, Paragraph 3
+         WT_STREAM_DATA_BLOCKED  Section 2, Paragraph 7; Section 5.9,
+            Paragraph 1; Section 5.9, Paragraph 3
          WT_STREAMS_BLOCKED  Section 2, Paragraph 7; Section 5.10,
             Paragraph 1; Section 5.10, Paragraph 1; Section 5.10,
             Paragraph 2; Section 5.10, Paragraph 4
-         WT_STREAM_DATA_BLOCKED  Section 2, Paragraph 7; Section 5.9,
-            Paragraph 1; Section 5.9, Paragraph 3
 
 Authors' Addresses
 

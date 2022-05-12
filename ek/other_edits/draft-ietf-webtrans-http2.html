@@ -18,15 +18,15 @@ describes a protocol that can provide many of the capabilities of WebTransport
 over HTTP/2.  This protocol enables the use of WebTransport when a UDP-based
 protocol is not available. 
     " name="description">
-<meta content="xml2rfc 3.12.3" name="generator">
+<meta content="xml2rfc 3.12.6" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-webtrans-http2-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.12.3
+  xml2rfc 3.12.6
     Python 3.9.7
     appdirs 1.4.4
     ConfigArgParse 1.3
-    google-i18n-address 2.5.0
+    google-i18n-address 2.5.1
     html5lib 1.1
     intervaltree 3.1.0
     Jinja2 2.11.3
@@ -1022,11 +1022,11 @@ svg [stroke="fill"], svg [fill^="#fff"] {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">WebTransport-H2</td>
-<td class="right">March 2022</td>
+<td class="right">May 2022</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Frindell, et al.</td>
-<td class="center">Expires 24 September 2022</td>
+<td class="center">Expires 13 November 2022</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1039,12 +1039,12 @@ svg [stroke="fill"], svg [fill^="#fff"] {
 <dd class="internet-draft">draft-ietf-webtrans-http2-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2022-03-23" class="published">23 March 2022</time>
+<time datetime="2022-05-12" class="published">12 May 2022</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2022-09-24">24 September 2022</time></dd>
+<dd class="expires"><time datetime="2022-11-13">13 November 2022</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1114,7 +1114,7 @@ draft corresponding to this document can be found at
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 24 September 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 13 November 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1385,11 +1385,12 @@ include an <code>Origin</code> header field <span>[<a href="#ORIGIN" class="xref
 the site that requested the creation of the session.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
 <p id="section-3.3-3">Upon receiving an extended CONNECT request with a <code>:protocol</code> field set to
 <code>webtransport</code>, the HTTP server checks if the identified resource supports
-WebTransport sessions. If the resource does not, the server SHOULD reply with status
-code 404 (<span><a href="https://rfc-editor.org/rfc/rfc7231#section-6.5.4" class="relref">Section 6.5.4</a> of [<a href="#RFC7231" class="xref">RFC7231</a>]</span>). To accept a WebTransport session the
-server replies with 2xx status code. Before accepting a session, a server MUST
-ensure that it authorizes use of the session by the site identified in the
-<code>Origin</code> header.<a href="#section-3.3-3" class="pilcrow">¶</a></p>
+WebTransport sessions. If the resource does not, the server SHOULD reply with
+status code 404 (<span><a href="https://rfc-editor.org/rfc/rfc7231#section-6.5.4" class="relref">Section 6.5.4</a> of [<a href="#RFC7231" class="xref">RFC7231</a>]</span>). If it does, it MAY accept the
+session by replying with a 2xx series status code, as defined in Section 15.3
+of <span>[<a href="#SEMANTICS" class="xref">SEMANTICS</a>]</span>. The WebTransport server MUST
+verify the <code>Origin</code> header to ensure that the specified origin is allowed to
+access the server in question.<a href="#section-3.3-3" class="pilcrow">¶</a></p>
 <p id="section-3.3-4">From the client's perspective, a WebTransport session is established when the
 client receives a 200 response. From the server's perspective, a session is
 established once it sends a 200 response. Both endpoints MUST NOT send any
@@ -2206,6 +2207,10 @@ HTTP/2 connection is WebTransport-capable.<a href="#section-10.1-2" class="pilcr
         <dd>
 <span class="refAuthor">Iyengar, J., Ed.</span> and <span class="refAuthor">M. Thomson, Ed.</span>, <span class="refTitle">"QUIC: A UDP-Based Multiplexed and Secure Transport"</span>, <span class="seriesInfo">RFC 9000</span>, <span class="seriesInfo">DOI 10.17487/RFC9000</span>, <time datetime="2021-05" class="refDate">May 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9000">https://www.rfc-editor.org/rfc/rfc9000</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="SEMANTICS">[SEMANTICS]</dt>
+        <dd>
+<span class="refAuthor">Fielding, R. T.</span>, <span class="refAuthor">Nottingham, M.</span>, and <span class="refAuthor">J. Reschke</span>, <span class="refTitle">"HTTP Semantics"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-httpbis-semantics-19</span>, <time datetime="2021-09-12" class="refDate">12 September 2021</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-semantics-19">https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-semantics-19</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="WEBTRANSPORT-H3">[WEBTRANSPORT-H3]</dt>
       <dd>
 <span class="refAuthor">Frindell, A.</span>, <span class="refAuthor">Kinnear, E.</span>, and <span class="refAuthor">V. Vasiliev</span>, <span class="refTitle">"WebTransport over HTTP/3"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-webtrans-http3-02</span>, <time datetime="2021-10-25" class="refDate">25 October 2021</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-webtrans-http3-02">https://datatracker.ietf.org/doc/html/draft-ietf-webtrans-http3-02</a>&gt;</span>. </dd>
@@ -2262,23 +2267,23 @@ contributions in the design and implementation of this work.<a href="#appendix-A
 <ul class="compact normal ulEmpty">
 <li class="compact normal ulEmpty" id="appendix-B-2.1.2.1">
               <span class="break"></span><dl class="dlCompact dlParallel" id="appendix-B-2.1.2.1.1">
-                <dt id="appendix-B-2.1.2.1.1.1">WT_DATAGRAM</dt>
+                <dt id="appendix-B-2.1.2.1.1.1">WT_DATA_BLOCKED</dt>
                 <dd style="margin-left: 1.5em" id="appendix-B-2.1.2.1.1.2">
                   <p id="appendix-B-2.1.2.1.1.2.1">
-                    <a href="#section-5.11-1" class="xref">Section 5.11, Paragraph 1</a>; 
-<a href="#section-5.11-3" class="xref">Section 5.11, Paragraph 3</a>; 
-<a href="#section-5.11-5" class="xref">Section 5.11, Paragraph 5</a>; 
-<a href="#section-5.11-6" class="xref">Section 5.11, Paragraph 6</a><a href="#appendix-B-2.1.2.1.1.2.1" class="pilcrow">¶</a></p>
-</dd>
-                <dd class="break"></dd>
-<dt id="appendix-B-2.1.2.1.1.3">WT_DATA_BLOCKED</dt>
-                <dd style="margin-left: 1.5em" id="appendix-B-2.1.2.1.1.4">
-                  <p id="appendix-B-2.1.2.1.1.4.1">
                     <a href="#section-2-7" class="xref">Section 2, Paragraph 7</a>; 
 <a href="#section-5.8-1" class="xref">Section 5.8, Paragraph 1</a>; 
 <a href="#section-5.8-1" class="xref">Section 5.8, Paragraph 1</a>; 
 <a href="#section-5.8-3" class="xref">Section 5.8, Paragraph 3</a>; 
-<a href="#section-5.9-1" class="xref">Section 5.9, Paragraph 1</a><a href="#appendix-B-2.1.2.1.1.4.1" class="pilcrow">¶</a></p>
+<a href="#section-5.9-1" class="xref">Section 5.9, Paragraph 1</a><a href="#appendix-B-2.1.2.1.1.2.1" class="pilcrow">¶</a></p>
+</dd>
+                <dd class="break"></dd>
+<dt id="appendix-B-2.1.2.1.1.3">WT_DATAGRAM</dt>
+                <dd style="margin-left: 1.5em" id="appendix-B-2.1.2.1.1.4">
+                  <p id="appendix-B-2.1.2.1.1.4.1">
+                    <a href="#section-5.11-1" class="xref">Section 5.11, Paragraph 1</a>; 
+<a href="#section-5.11-3" class="xref">Section 5.11, Paragraph 3</a>; 
+<a href="#section-5.11-5" class="xref">Section 5.11, Paragraph 5</a>; 
+<a href="#section-5.11-6" class="xref">Section 5.11, Paragraph 6</a><a href="#appendix-B-2.1.2.1.1.4.1" class="pilcrow">¶</a></p>
 </dd>
                 <dd class="break"></dd>
 <dt id="appendix-B-2.1.2.1.1.5">WT_MAX_DATA</dt>
@@ -2289,22 +2294,22 @@ contributions in the design and implementation of this work.<a href="#appendix-A
 <a href="#section-5.5-3" class="xref">Section 5.5, Paragraph 3</a><a href="#appendix-B-2.1.2.1.1.6.1" class="pilcrow">¶</a></p>
 </dd>
                 <dd class="break"></dd>
-<dt id="appendix-B-2.1.2.1.1.7">WT_MAX_STREAMS</dt>
+<dt id="appendix-B-2.1.2.1.1.7">WT_MAX_STREAM_DATA</dt>
                 <dd style="margin-left: 1.5em" id="appendix-B-2.1.2.1.1.8">
                   <p id="appendix-B-2.1.2.1.1.8.1">
                     <a href="#section-2-7" class="xref">Section 2, Paragraph 7</a>; 
-<a href="#section-5.7-1" class="xref">Section 5.7, Paragraph 1</a>; 
-<a href="#section-5.7-1" class="xref">Section 5.7, Paragraph 1</a>; 
-<a href="#section-5.7-1" class="xref">Section 5.7, Paragraph 1</a>; 
-<a href="#section-5.7-3" class="xref">Section 5.7, Paragraph 3</a><a href="#appendix-B-2.1.2.1.1.8.1" class="pilcrow">¶</a></p>
+<a href="#section-5.6-1" class="xref">Section 5.6, Paragraph 1</a>; 
+<a href="#section-5.6-3" class="xref">Section 5.6, Paragraph 3</a><a href="#appendix-B-2.1.2.1.1.8.1" class="pilcrow">¶</a></p>
 </dd>
                 <dd class="break"></dd>
-<dt id="appendix-B-2.1.2.1.1.9">WT_MAX_STREAM_DATA</dt>
+<dt id="appendix-B-2.1.2.1.1.9">WT_MAX_STREAMS</dt>
                 <dd style="margin-left: 1.5em" id="appendix-B-2.1.2.1.1.10">
                   <p id="appendix-B-2.1.2.1.1.10.1">
                     <a href="#section-2-7" class="xref">Section 2, Paragraph 7</a>; 
-<a href="#section-5.6-1" class="xref">Section 5.6, Paragraph 1</a>; 
-<a href="#section-5.6-3" class="xref">Section 5.6, Paragraph 3</a><a href="#appendix-B-2.1.2.1.1.10.1" class="pilcrow">¶</a></p>
+<a href="#section-5.7-1" class="xref">Section 5.7, Paragraph 1</a>; 
+<a href="#section-5.7-1" class="xref">Section 5.7, Paragraph 1</a>; 
+<a href="#section-5.7-1" class="xref">Section 5.7, Paragraph 1</a>; 
+<a href="#section-5.7-3" class="xref">Section 5.7, Paragraph 3</a><a href="#appendix-B-2.1.2.1.1.10.1" class="pilcrow">¶</a></p>
 </dd>
                 <dd class="break"></dd>
 <dt id="appendix-B-2.1.2.1.1.11">WT_PADDING</dt>
@@ -2351,22 +2356,22 @@ contributions in the design and implementation of this work.<a href="#appendix-A
 <a href="#section-6-3" class="xref">Section 6, Paragraph 3</a><a href="#appendix-B-2.1.2.1.1.18.1" class="pilcrow">¶</a></p>
 </dd>
                 <dd class="break"></dd>
-<dt id="appendix-B-2.1.2.1.1.19">WT_STREAMS_BLOCKED</dt>
+<dt id="appendix-B-2.1.2.1.1.19">WT_STREAM_DATA_BLOCKED</dt>
                 <dd style="margin-left: 1.5em" id="appendix-B-2.1.2.1.1.20">
                   <p id="appendix-B-2.1.2.1.1.20.1">
+                    <a href="#section-2-7" class="xref">Section 2, Paragraph 7</a>; 
+<a href="#section-5.9-1" class="xref">Section 5.9, Paragraph 1</a>; 
+<a href="#section-5.9-3" class="xref">Section 5.9, Paragraph 3</a><a href="#appendix-B-2.1.2.1.1.20.1" class="pilcrow">¶</a></p>
+</dd>
+                <dd class="break"></dd>
+<dt id="appendix-B-2.1.2.1.1.21">WT_STREAMS_BLOCKED</dt>
+                <dd style="margin-left: 1.5em" id="appendix-B-2.1.2.1.1.22">
+                  <p id="appendix-B-2.1.2.1.1.22.1">
                     <a href="#section-2-7" class="xref">Section 2, Paragraph 7</a>; 
 <a href="#section-5.10-1" class="xref">Section 5.10, Paragraph 1</a>; 
 <a href="#section-5.10-1" class="xref">Section 5.10, Paragraph 1</a>; 
 <a href="#section-5.10-2" class="xref">Section 5.10, Paragraph 2</a>; 
-<a href="#section-5.10-4" class="xref">Section 5.10, Paragraph 4</a><a href="#appendix-B-2.1.2.1.1.20.1" class="pilcrow">¶</a></p>
-</dd>
-                <dd class="break"></dd>
-<dt id="appendix-B-2.1.2.1.1.21">WT_STREAM_DATA_BLOCKED</dt>
-                <dd style="margin-left: 1.5em" id="appendix-B-2.1.2.1.1.22">
-                  <p id="appendix-B-2.1.2.1.1.22.1">
-                    <a href="#section-2-7" class="xref">Section 2, Paragraph 7</a>; 
-<a href="#section-5.9-1" class="xref">Section 5.9, Paragraph 1</a>; 
-<a href="#section-5.9-3" class="xref">Section 5.9, Paragraph 3</a><a href="#appendix-B-2.1.2.1.1.22.1" class="pilcrow">¶</a></p>
+<a href="#section-5.10-4" class="xref">Section 5.10, Paragraph 4</a><a href="#appendix-B-2.1.2.1.1.22.1" class="pilcrow">¶</a></p>
 </dd>
               <dd class="break"></dd>
 </dl>
