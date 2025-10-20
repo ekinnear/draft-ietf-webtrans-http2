@@ -1795,13 +1795,9 @@ unable to buffer them.<a href="#section-5.1-4.2.1" class="pilcrow">¶</a></p>
           <dd class="break"></dd>
 <dt id="section-5.1-4.3">Pooling:</dt>
           <dd style="margin-left: 1.5em" id="section-5.1-4.4">
-            <p id="section-5.1-4.4.1">WebTransport over HTTP/2 provides optional support for pooling.  Every
+            <p id="section-5.1-4.4.1">WebTransport over HTTP/2 provides support for pooling.  Every
 WebTransport session is an independent HTTP/2 stream and does not compete with
-other pooled WebTransport sessions for per-stream resources.  However,
-endpoints can use the SETTINGS_WT_MAX_SESSIONS setting to limit the maximum
-number of WebTransport sessions the peer can open, and they can prevent
-pooling by sending SETTINGS_WT_MAX_SESSIONS with a value of "1"
-(<a href="#flow-control-limit-sessions" class="auto internal xref">Section 4.1</a>).<a href="#section-5.1-4.4.1" class="pilcrow">¶</a></p>
+other pooled WebTransport sessions for per-stream resources.<a href="#section-5.1-4.4.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 <dt id="section-5.1-4.5">Stream Independence:</dt>
