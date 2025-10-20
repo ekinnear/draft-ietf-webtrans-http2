@@ -1372,7 +1372,7 @@ HTTP/2 <span>[<a href="#HTTP2" class="cite xref">HTTP2</a>]</span> as the curren
 "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this
 document are to be interpreted as described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span>
 when, and only when, they appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
-<p id="section-1.1-2">This document follows terminology defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-webtrans-overview-10#section-1.2" class="relref">Section 1.2</a> of [<a href="#OVERVIEW" class="cite xref">OVERVIEW</a>]</span>. Note
+<p id="section-1.1-2">This document follows terminology defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-webtrans-overview-11#section-1.2" class="relref">Section 1.2</a> of [<a href="#OVERVIEW" class="cite xref">OVERVIEW</a>]</span>. Note
 that this document distinguishes between a WebTransport server and an HTTP/2
 server. An HTTP/2 server is the server that terminates HTTP/2 connections; a
 WebTransport server is an application that accepts WebTransport sessions, which
@@ -2475,7 +2475,7 @@ length MUST NOT exceed 1024 bytes.<a href="#section-6.12-5.4.1" class="pilcrow">
 <p id="section-6.12-6">An endpoint that sends a WT_CLOSE_SESSION capsule MUST then half-close the
 stream by sending an HTTP/2 frame with the END_STREAM flag set (<span><a href="https://rfc-editor.org/rfc/rfc9113#section-5.1" class="relref">Section 5.1</a> of [<a href="#HTTP2" class="cite xref">HTTP2</a>]</span>).  The recipient MUST close the stream upon receipt of the capsule by
 replying with an HTTP/2 frame with the END_STREAM flag set; note that it does
-not need to contain a WT_CLOSE_SESSION capsule in response.<a href="#section-6.12-6" class="pilcrow">¶</a></p>
+not need to send a WT_CLOSE_SESSION capsule in response.<a href="#section-6.12-6" class="pilcrow">¶</a></p>
 <p id="section-6.12-7">Cleanly terminating a WebTransport session without a WT_CLOSE_SESSION capsule
 is semantically equivalent to terminating it with a WT_CLOSE_SESSION capsule
 that has an error code of 0 and an empty error string.<a href="#section-6.12-7" class="pilcrow">¶</a></p>
@@ -3213,7 +3213,7 @@ by <span>[<a href="#HTTP-DATAGRAM" class="cite xref">HTTP-DATAGRAM</a>]</span>:<
 <dd class="break"></dd>
 <dt id="OVERVIEW">[OVERVIEW]</dt>
         <dd>
-<span class="refAuthor">Kinnear, E.</span> and <span class="refAuthor">V. Vasiliev</span>, <span class="refTitle">"The WebTransport Protocol Framework"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-webtrans-overview-10</span>, <time datetime="2025-07-07" class="refDate">7 July 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-webtrans-overview-10">https://datatracker.ietf.org/doc/html/draft-ietf-webtrans-overview-10</a>&gt;</span>. </dd>
+<span class="refAuthor">Kinnear, E.</span> and <span class="refAuthor">V. Vasiliev</span>, <span class="refTitle">"The WebTransport Protocol Framework"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-webtrans-overview-11</span>, <time datetime="2025-10-20" class="refDate">20 October 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-webtrans-overview-11">https://datatracker.ietf.org/doc/html/draft-ietf-webtrans-overview-11</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="PARTIAL-RESET">[PARTIAL-RESET]</dt>
         <dd>

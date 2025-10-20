@@ -1069,7 +1069,7 @@ Table of Contents
    close the stream by sending an HTTP/2 frame with the END_STREAM flag
    set (Section 5.1 of [HTTP2]).  The recipient MUST close the stream
    upon receipt of the capsule by replying with an HTTP/2 frame with the
-   END_STREAM flag set; note that it does not need to contain a
+   END_STREAM flag set; note that it does not need to send a
    WT_CLOSE_SESSION capsule in response.
 
    Cleanly terminating a WebTransport session without a WT_CLOSE_SESSION
@@ -1504,9 +1504,9 @@ WebTransport Data
 
    [OVERVIEW] Kinnear, E. and V. Vasiliev, "The WebTransport Protocol
               Framework", Work in Progress, Internet-Draft, draft-ietf-
-              webtrans-overview-10, 7 July 2025,
+              webtrans-overview-11, 20 October 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-
-              webtrans-overview-10>.
+              webtrans-overview-11>.
 
    [PARTIAL-RESET]
               Seemann, M. and K. Oku, "QUIC Stream Resets with Partial
