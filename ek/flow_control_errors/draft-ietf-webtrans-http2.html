@@ -2091,7 +2091,7 @@ with Stream Data in excess of this limit, it MUST close the WebTransport session
 with a WEBTRANSPORT_FLOW_CONTROL_ERROR session error.<a href="#section-6.5-5" class="pilcrow">¶</a></p>
 <p id="section-6.5-6">If an endpoint receives a <span id="iref-wt_max_data-62" class="iref"></span><a href="#WT_MAX_DATA" class="internal xref">WT_MAX_DATA</a> capsule with a Maximum Data value less
 than a previously received value, it MUST close the WebTransport session with
-the WEBTRANSPORT_FLOW_CONTROL_ERROR session error.<a href="#section-6.5-6" class="pilcrow">¶</a></p>
+a WEBTRANSPORT_FLOW_CONTROL_ERROR session error.<a href="#section-6.5-6" class="pilcrow">¶</a></p>
 <p id="section-6.5-7">The <span id="iref-wt_max_data-63" class="iref"></span><a href="#WT_MAX_DATA" class="internal xref">WT_MAX_DATA</a> capsule defines special intermediary handling, as described in
 <span><a href="https://rfc-editor.org/rfc/rfc9297#section-3.2" class="relref">Section 3.2</a> of [<a href="#HTTP-DATAGRAM" class="cite xref">HTTP-DATAGRAM</a>]</span>.  Intermediaries MUST consume <span id="iref-wt_max_data-64" class="iref"></span><a href="#WT_MAX_DATA" class="internal xref">WT_MAX_DATA</a>
 capsules for flow control purposes and MUST generate and send appropriate flow
@@ -2147,7 +2147,7 @@ this limit, it MUST close the WebTransport session with a
 WEBTRANSPORT_FLOW_CONTROL_ERROR session error.<a href="#section-6.6-5" class="pilcrow">¶</a></p>
 <p id="section-6.6-6">If an endpoint receives a <span id="iref-wt_max_stream_data-71" class="iref"></span><a href="#WT_MAX_STREAM_DATA" class="internal xref">WT_MAX_STREAM_DATA</a> capsule with a Maximum Stream Data
 value less than a previously received value, it MUST close the WebTransport
-session with the WEBTRANSPORT_FLOW_CONTROL_ERROR session error.<a href="#section-6.6-6" class="pilcrow">¶</a></p>
+session with a WEBTRANSPORT_FLOW_CONTROL_ERROR session error.<a href="#section-6.6-6" class="pilcrow">¶</a></p>
 <p id="section-6.6-7">The <span id="iref-wt_max_stream_data-72" class="iref"></span><a href="#WT_MAX_STREAM_DATA" class="internal xref">WT_MAX_STREAM_DATA</a> capsule defines special intermediary handling, as
 described in <span><a href="https://rfc-editor.org/rfc/rfc9297#section-3.2" class="relref">Section 3.2</a> of [<a href="#HTTP-DATAGRAM" class="cite xref">HTTP-DATAGRAM</a>]</span>.  Intermediaries MUST consume
 <span id="iref-wt_max_stream_data-73" class="iref"></span><a href="#WT_MAX_STREAM_DATA" class="internal xref">WT_MAX_STREAM_DATA</a> capsules for flow control purposes and MUST generate and
@@ -2215,7 +2215,7 @@ Maximum Streams value, it MUST close the WebTransport session with a
 WEBTRANSPORT_FLOW_CONTROL_ERROR session error.<a href="#section-6.7-8" class="pilcrow">¶</a></p>
 <p id="section-6.7-9">If an endpoint receives a <span id="iref-wt_max_streams-85" class="iref"></span><a href="#WT_MAX_STREAMS" class="internal xref">WT_MAX_STREAMS</a> capsule with a Maximum Streams
 value less than a previously received value, it MUST close the WebTransport
-session with the WEBTRANSPORT_FLOW_CONTROL_ERROR session error.<a href="#section-6.7-9" class="pilcrow">¶</a></p>
+session with a WEBTRANSPORT_FLOW_CONTROL_ERROR session error.<a href="#section-6.7-9" class="pilcrow">¶</a></p>
 <p id="section-6.7-10">The <span id="iref-wt_max_streams-86" class="iref"></span><a href="#WT_MAX_STREAMS" class="internal xref">WT_MAX_STREAMS</a> capsule defines special intermediary handling, as
 described in <span><a href="https://rfc-editor.org/rfc/rfc9297#section-3.2" class="relref">Section 3.2</a> of [<a href="#HTTP-DATAGRAM" class="cite xref">HTTP-DATAGRAM</a>]</span>.  Intermediaries MUST consume
 <span id="iref-wt_max_streams-87" class="iref"></span><a href="#WT_MAX_STREAMS" class="internal xref">WT_MAX_STREAMS</a> capsules for flow control purposes and MUST generate and
