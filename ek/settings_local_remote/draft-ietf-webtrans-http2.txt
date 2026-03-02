@@ -1362,7 +1362,7 @@ WebTransport Data
 
    Setting Name:  SETTINGS_WT_INITIAL_MAX_STREAM_DATA_BIDI_REMOTE
 
-   Code:  0x2b64
+   Code:  0x2b66
 
    Initial Value:  0
 
@@ -1381,7 +1381,7 @@ WebTransport Data
 
    Setting Name:  SETTINGS_WT_INITIAL_MAX_STREAMS_UNI
 
-   Code:  0x2b65
+   Code:  0x2b64
 
    Initial Value:  0
 
@@ -1400,7 +1400,7 @@ WebTransport Data
 
    Setting Name:  SETTINGS_WT_INITIAL_MAX_STREAMS_BIDI
 
-   Code:  0x2b66
+   Code:  0x2b65
 
    Initial Value:  0
 
