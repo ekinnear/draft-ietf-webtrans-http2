@@ -828,7 +828,8 @@ Table of Contents
    subject to the limits on the number of streams (Section 6.7), on
    session data (Section 6.5), and on stream data (Section 6.6).  A
    WT_STREAM capsule that exceeds any of these limits results in a
-   WT_FLOW_CONTROL_ERROR session error, as described in those sections.
+   WT_FLOW_CONTROL_ERROR session error, as described in the
+   corresponding sections.
 
 6.5.  WT_MAX_DATA Capsule
 
