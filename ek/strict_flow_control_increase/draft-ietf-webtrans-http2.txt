@@ -5,7 +5,7 @@
 WEBTRANS                                                     A. Frindell
 Internet-Draft                                                      Meta
 Intended status: Standards Track                              E. Kinnear
-Expires: 5 May 2027                                             T. Pauly
+Expires: 6 May 2027                                             T. Pauly
                                                               Apple Inc.
                                                               M. Thomson
                                                                  Mozilla
@@ -13,7 +13,7 @@ Expires: 5 May 2027                                             T. Pauly
                                                                   Google
                                                                   G. Xie
                                                                     Meta
-                                                         1 November 2026
+                                                         2 November 2026
 
 
                         WebTransport over HTTP/2
@@ -59,7 +59,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 May 2027.
+   This Internet-Draft will expire on 6 May 2027.
 
 Copyright Notice
 
@@ -114,6 +114,7 @@ Table of Contents
    7.  Requirements on TLS Usage
    8.  Examples
    9.  Considerations for Future Versions
+     9.1.  Draft Versions
    10. Security Considerations
    11. IANA Considerations
      11.1.  Upgrade Token Registration
@@ -1341,6 +1342,19 @@ WebTransport Data
    offer multiple versions simultaneously (Section 9.1 of
    [WEBTRANSPORT-H3]).
 
+9.1.  Draft Versions
+
+   [[RFC editor: please remove this section before publication.]]
+
+   A draft version of this document that makes a breaking change, either
+   to the wire format or to protocol behavior, uses a new codepoint for
+   the SETTINGS_WT_ENABLED setting.  This draft version uses 0x2b67;
+   draft-ietf-webtrans-http2-15 used 0x2b60.  A server that supports
+   more than one draft version can send SETTINGS_WT_ENABLED with each
+   corresponding codepoint, but since a client does not indicate which
+   draft version it uses, the server needs to behave in a way that is
+   valid for all of the versions it advertises.
+
 10.  Security Considerations
 
    WebTransport over HTTP/2 satisfies all of the security requirements
@@ -1424,7 +1438,7 @@ WebTransport Data
 
    Setting Name:  SETTINGS_WT_ENABLED
 
-   Code:  0x2b60
+   Code:  0x2b67
 
    Initial Value:  0
 
