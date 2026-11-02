@@ -5,7 +5,7 @@
 WEBTRANS                                                     A. Frindell
 Internet-Draft                                                      Meta
 Intended status: Standards Track                              E. Kinnear
-Expires: 5 May 2027                                             T. Pauly
+Expires: 6 May 2027                                             T. Pauly
                                                               Apple Inc.
                                                               M. Thomson
                                                                  Mozilla
@@ -13,7 +13,7 @@ Expires: 5 May 2027                                             T. Pauly
                                                                   Google
                                                                   G. Xie
                                                                     Meta
-                                                         1 November 2026
+                                                         2 November 2026
 
 
                         WebTransport over HTTP/2
@@ -59,7 +59,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 May 2027.
+   This Internet-Draft will expire on 6 May 2027.
 
 Copyright Notice
 
@@ -334,7 +334,7 @@ Table of Contents
    the session.  Before closing the stream, either endpoint can send a
    WT_CLOSE_SESSION capsule (Section 6.12) with an application error
    code and message to convey additional information about the reasons
-   for closing the session.  An HTTP/2 stream that is reset also
+   for closing the session.  Resetting the CONNECT stream also
    terminates the session, without providing an application-level
    signal, though there will be an HTTP/2 error code.
 
