@@ -453,8 +453,8 @@ Table of Contents
 
    For the checks in Section 6.5, Section 6.6, and Section 6.7, the
    initial values that apply to a session count as values previously
-   received; a capsule that repeats an initial value does not increase
-   the limit.
+   received, and a capsule that repeats an initial value does not
+   increase the limit.
 
 4.3.1.  Flow Control SETTINGS
 
