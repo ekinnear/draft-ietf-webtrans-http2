@@ -5,7 +5,7 @@
 WEBTRANS                                                     A. Frindell
 Internet-Draft                                                      Meta
 Intended status: Standards Track                              E. Kinnear
-Expires: 5 May 2027                                             T. Pauly
+Expires: 6 May 2027                                             T. Pauly
                                                               Apple Inc.
                                                               M. Thomson
                                                                  Mozilla
@@ -13,7 +13,7 @@ Expires: 5 May 2027                                             T. Pauly
                                                                   Google
                                                                   G. Xie
                                                                     Meta
-                                                         1 November 2026
+                                                         2 November 2026
 
 
                         WebTransport over HTTP/2
@@ -59,7 +59,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 May 2027.
+   This Internet-Draft will expire on 6 May 2027.
 
 Copyright Notice
 
@@ -519,7 +519,7 @@ Table of Contents
    endpoint MUST reject the CONNECT request with a 4xx status code.
    Unknown keys and parameters in the dictionary MUST be ignored.
 
-   The WebTransport-Init header field only carries initial stream data
+   The WebTransport-Init header field only includes initial stream data
    limits.  A WT_MAX_STREAM_DATA capsule applies to a specific stream
    and can only be sent once that stream exists, so an initial value is
    needed for a peer to send data on a new stream without waiting for a
